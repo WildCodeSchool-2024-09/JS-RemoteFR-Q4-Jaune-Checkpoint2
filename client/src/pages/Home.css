@@ -1,0 +1,29 @@
+.home-cupcake {
+  display: inline-block;
+  margin-right: calc(var(--spacing-lg) * 2);
+  position: relative;
+  vertical-align: top;
+}
+
+.home-cupcake::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  animation: rotating 14s infinite linear;
+  background-image: url("../assets/starburst.png");
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.home-content {
+  display: inline-block;
+}

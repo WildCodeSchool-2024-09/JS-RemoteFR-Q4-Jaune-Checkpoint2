@@ -1,0 +1,13 @@
+{
+  "name": "algo",
+  "scripts": {
+    "test:1": "jest --verbose ./1",
+    "test:2": "jest --verbose ./2",
+    "test:3": "jest --verbose ./3",
+    "test:4": "jest --verbose ./4",
+    "test": "jest --verbose"
+  },
+  "devDependencies": {
+    "ts-jest": "^29.2.5"
+  }
+}
