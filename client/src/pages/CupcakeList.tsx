@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
@@ -34,14 +35,22 @@ const sampleCupcakes = [
 
 type CupcakeArray = typeof sampleCupcakes;
 
+const cupcakeLoader = () => {
+  return axios
+    .get("http://localhost:3310/api/cupcakes")
+    .then((response) => response)
+    .catch((error) => console.error(error));
+};
+
+export { cupcakeLoader };
+
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
 function CupcakeList() {
   // Step 1: get all cupcakes
-  console.info(useLoaderData() as CupcakeArray);
-
+  const cupcakes = useLoaderData() as CupcakeArray;
   // Step 3: get all accessories
 
   // Step 5: create filter state
@@ -62,9 +71,11 @@ function CupcakeList() {
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake data={sampleCupcakes[0]} />
-        </li>
+        {cupcakes.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake data={cupcake} />
+          </li>
+        ))}
         {/* end of block */}
       </ul>
     </>

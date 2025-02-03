@@ -6,23 +6,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 /* ************************************************************************* */
 
 import App from "./App";
-
+import { cupcakeLoader } from "./pages/CupcakeList";
 import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
-
-const cupcakeLoader = () => {
-  return fetch("http://localhost:3310/api/cupcakes")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch((err) => {
-      console.error("Erreur:", err);
-    });
-};
 
 const router = createBrowserRouter([
   {
