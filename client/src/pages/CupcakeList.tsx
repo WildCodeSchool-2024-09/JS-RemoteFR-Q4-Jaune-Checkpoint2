@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
@@ -54,6 +54,16 @@ function CupcakeList() {
 
   // Step 5: create filter state
 
+  const [selectedAccessories, setSelectedAccessories] = useState("");
+  const handleAccessoriesChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSelectedAccessories(event.target.value);
+  };
+
+  const filteredCupcakes = data.filter(
+    (cupcake) => cupcake.accessory_id === selectedAccessories,
+  );
   return (
     <>
       <h1>My cupcakes</h1>
@@ -61,7 +71,11 @@ function CupcakeList() {
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            value={selectedAccessories}
+            onChange={handleAccessoriesChange}
+          >
             <option value="">---</option>
             <option value="1">Cherry</option>
             <option value="2">Donut</option>
@@ -73,8 +87,8 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {data.map((data) => (
-          <Cupcake key={data.id} data={data} />
+        {(selectedAccessories ? filteredCupcakes : data).map((cupcake) => (
+          <Cupcake key={cupcake.id} data={cupcake} />
         ))}
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
