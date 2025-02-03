@@ -11,7 +11,6 @@ Pour exemple, si ta fonction recevait le tableau ci-dessous en paramètre, tu de
 */
 
 function getPoints(results: string[]): number {
-  // Your code here !
   return 0;
 }
 
