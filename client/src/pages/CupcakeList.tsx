@@ -68,18 +68,32 @@ function CupcakeList() {
       })
       .catch((error) => console.error("Error fetching accessories:", error));
   }, []);
-  console.info(accessory);
 
-  // Step 5: create filter state
+  const [selectedAccessory, setSelectedAccessory] = useState<string>("");
+
+  const filteredCupcake = selectedAccessory
+    ? cupcakes.filter(
+        (cupcake) => cupcake.accessory_id.toString() === selectedAccessory,
+      )
+    : cupcakes;
+
+  const handleAccessoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSelectedAccessory(event.target.value);
+  };
 
   return (
     <>
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            value={selectedAccessory}
+            onChange={handleAccessoryChange}
+          >
             <option value="">---</option>
             {accessory.map((access) => (
               <option key={access.id} value={access.id}>
@@ -90,9 +104,8 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
-          {cupcakes.map((cupcake) => (
+          {filteredCupcake.map((cupcake) => (
             <Cupcake key={cupcake.id} data={cupcake} />
           ))}
         </li>
