@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
@@ -41,9 +43,14 @@ type CupcakeArray = typeof sampleCupcakes;
 function CupcakeList() {
   // Step 1: get all cupcakes
   const data = useLoaderData() as CupcakeArray;
-  console.info(data as CupcakeArray);
 
   // Step 3: get all accessories
+  useEffect(() => {
+    axios
+      .get("http://localhost:3310/api/accessories")
+      .then((response) => response.data)
+      .catch((error) => console.error(error));
+  });
 
   // Step 5: create filter state
 
