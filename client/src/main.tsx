@@ -1,7 +1,8 @@
-// Import necessary modules from React and React Router
+// Import necessary modules from React and React Route
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { getCupcakeList } from "./services/Requests";
 
 /* ************************************************************************* */
 
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
-        loader: CupcakeList,
+        loader: getCupcakeList,
       },
     ],
   },
