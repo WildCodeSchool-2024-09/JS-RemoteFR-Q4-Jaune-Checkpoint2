@@ -43,6 +43,7 @@ console.info(typeof sampleCupcakes);
 function CupcakeList() {
   // Step 1: get all cupcakes
   console.info(useLoaderData() as CupcakeArray);
+  const cupcakes = useLoaderData() as CupcakeArray;
 
   // Step 3: get all accessories
 
@@ -63,6 +64,9 @@ function CupcakeList() {
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
+        {cupcakes.map((cupcake) => (
+          <Cupcake key={cupcake.id} data={cupcake} />
+        ))}
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
           <Cupcake data={sampleCupcakes[0]} />
