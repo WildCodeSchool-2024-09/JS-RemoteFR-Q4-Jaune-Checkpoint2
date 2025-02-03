@@ -47,7 +47,7 @@ type CupcakeArray = typeof sampleCupcakes;
 /* ************************************************************************* */
 
 function CupcakeList() {
-  // Step 1: get all cupcakes
+  const [filter, setFilter] = useState("");
   const cupcakes = useLoaderData() as CupcakeArray;
   console.info(cupcakes);
 
@@ -56,11 +56,14 @@ function CupcakeList() {
   useEffect(() => {
     axios.get("http://localhost:3310/api/accessories").then((response) => {
       setAccessories(response.data);
-      console.info(accessories);
     });
-  }, [accessories]);
+  }, []);
+  console.info(accessories);
 
   // Step 5: create filter state
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilter(e.target.value === "---" ? "" : e.target.value);
+  };
 
   return (
     <>
@@ -69,9 +72,14 @@ function CupcakeList() {
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            onChange={handleFilterChange}
+            value={filter}
+          >
+            <option value="">---</option>
             {accessories.map((accessory) => (
-              <option value={accessory.name} key={accessory.id}>
+              <option value={accessory.slug} key={accessory.id}>
                 {accessory.name}
               </option>
             ))}
@@ -81,15 +89,16 @@ function CupcakeList() {
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
-        {cupcakes.map((cupcake) => (
-          <li className="cupcake-item" key={cupcake.id}>
-            <Cupcake data={cupcake} />
-          </li>
-        ))}
+        {cupcakes
+          .filter((cupcake) => filter === "" || cupcake.accessory === filter)
+          .map((cupcake) => (
+            <li className="cupcake-item" key={cupcake.id}>
+              <Cupcake data={cupcake} />
+            </li>
+          ))}
         {/* end of block */}
       </ul>
     </>
   );
 }
-
 export default CupcakeList;
