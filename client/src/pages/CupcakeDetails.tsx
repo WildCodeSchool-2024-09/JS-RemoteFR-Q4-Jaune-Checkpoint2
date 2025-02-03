@@ -1,5 +1,5 @@
-import Cupcake from "../components/Cupcake";
 import { useLoaderData, useParams } from "react-router-dom";
+import Cupcake from "../components/Cupcake";
 
 interface CupcakeType {
   id: number;
