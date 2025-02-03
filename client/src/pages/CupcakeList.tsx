@@ -1,4 +1,8 @@
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+
 import Cupcake from "../components/Cupcake";
 
 /* ************************************************************************* */
@@ -42,15 +46,29 @@ interface CupcakeType {
   name: string;
 }
 
+interface AccessoryTypes {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
 function CupcakeList() {
   const cupcakes = useLoaderData() as CupcakeType[];
-  console.info(cupcakes);
+  const [accessory, setAccessory] = useState<AccessoryTypes[]>([]);
 
-  // Step 3: get all accessories
+  useEffect(() => {
+    axios
+      .get("http://localhost:3310/api/accessories")
+      .then((response) => {
+        setAccessory(response.data);
+      })
+      .catch((error) => console.error("Error fetching accessories:", error));
+  }, []);
+  console.info(accessory);
 
   // Step 5: create filter state
 
@@ -68,7 +86,6 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
           {cupcakes.map((cupcake) => (
