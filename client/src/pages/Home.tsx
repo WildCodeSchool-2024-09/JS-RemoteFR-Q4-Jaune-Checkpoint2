@@ -5,6 +5,8 @@ import "./Home.css";
 import Cupcake from "../components/Cupcake";
 
 const sampleData = {
+  id: 1,
+  accessory_id: 4,
   accessory: "donut",
   color1: "var(--default-cream-color)",
   color2: "var(--default-cream-color)",
