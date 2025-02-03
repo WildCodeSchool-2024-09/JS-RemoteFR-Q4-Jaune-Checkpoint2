@@ -10,8 +10,15 @@ Exemples :
 */
 
 function countLetters(givenString: string, letter: string): number {
-  // Your code here !
-  return 0;
+  const filterdedString = givenString.split("").filter((s) => s === letter);
+
+  return filterdedString.length;
 }
 
 export default countLetters;
+
+//Je reflechis d'abords a comment compter le nombre de fois qu'une lettre apparait dans une string.
+// Je crée une variable filterdedString pour stocker les bonnes lettres.
+//Je pense qu'il faut utiliser la fonction split() pour separer la givenString en un tableau de lettres.
+//Ensuite, je peux utiliser la fonction filter() pour filtrer les lettres qui sont egales a la lettre donnée.
+//Enfin, je peux return la longueur du tableau filterdedString pour compter le nombre de lettres dans le tableau filterdedString.
