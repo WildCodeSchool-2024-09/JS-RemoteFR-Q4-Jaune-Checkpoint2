@@ -42,13 +42,19 @@ console.info(typeof sampleCupcakes);
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
+interface AccessoryProps {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 function CupcakeList() {
   // Step 1: get all cupcakes
   console.info(useLoaderData() as CupcakeArray);
   const cupcakes = useLoaderData() as CupcakeArray;
 
   // Step 3: get all accessories
-  const [accessories, setAccessories] = useState([]);
+  const [accessories, setAccessories] = useState([] as AccessoryProps[]);
 
   useEffect(() => {
     // do something
@@ -72,6 +78,9 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessoirie) => (
+              <option key={accessoirie.id}>{accessoirie.name}</option>
+            ))}
           </select>
         </label>
       </form>
