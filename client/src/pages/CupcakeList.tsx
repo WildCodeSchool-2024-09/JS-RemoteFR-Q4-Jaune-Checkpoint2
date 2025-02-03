@@ -48,7 +48,7 @@ function CupcakeList() {
 
   // Step 3: get all accessories
 
-  const [allAccessories, setAllAccessories] = useState({} as AccessoryArray);
+  const [allAccessories, setAllAccessories] = useState([] as AccessoryArray);
 
   useEffect(() => {
     axios
@@ -63,6 +63,20 @@ function CupcakeList() {
 
   // Step 5: create filter state
 
+  const [filter, setFilter] = useState("");
+
+  const handleChangeAccessorie = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setFilter(event.currentTarget.value);
+  };
+
+  const filteredCupcakes = cupcakes
+    .filter((cupcake) =>
+      filter === "" ? cupcake : cupcake.accessory === filter,
+    )
+    .filter((cupcake) => cupcake.accessory.includes(filter));
+
   return (
     <>
       <h1>My cupcakes</h1>
@@ -70,7 +84,8 @@ function CupcakeList() {
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select id="cupcake-select" onChange={handleChangeAccessorie}>
+            <option value={""}>all</option>
             {allAccessories.map((accessorie) => (
               <option key={accessorie.id} value={accessorie.slug}>
                 {accessorie.name}
@@ -84,7 +99,7 @@ function CupcakeList() {
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 5: filter cupcakes before repeating */}
 
-        {cupcakes.map((cupcake) => (
+        {filteredCupcakes.map((cupcake) => (
           <li key={cupcake.id} className="cupcake-item">
             <Cupcake data={cupcake} />
           </li>
