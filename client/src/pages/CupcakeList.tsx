@@ -34,6 +34,8 @@ const sampleCupcakes = [
 
 type CupcakeArray = typeof sampleCupcakes;
 
+console.info(typeof sampleCupcakes);
+
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
