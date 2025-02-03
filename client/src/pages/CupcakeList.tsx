@@ -15,18 +15,11 @@ interface CupcakeData {
   name: string;
 }
 
-interface AccessoryData {
-  accessory: {
-    id: number;
-    name: string;
-    slug: string;
-  };
-}
-
+type AccessoryArray = { id: number; name: string; slug: string }[];
 function CupcakeList() {
   // Step 1: get all cupcakes
   const data = useLoaderData() as CupcakeArray;
-  const [accessoryData, setAccessoryData] = useState([] as AccessoryData[]);
+  const [accessoryData, setAccessoryData] = useState([] as AccessoryArray);
   const [selectedAccessory, setSelectedAccessory] = useState("");
 
   useEffect(() => {
@@ -37,6 +30,7 @@ function CupcakeList() {
       })
       .catch((error) => console.error(error));
   }, []);
+  console.info(accessoryData);
 
   const handleAccessoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -66,11 +60,14 @@ function CupcakeList() {
             onChange={handleAccessoryChange}
           >
             <option value="">---</option>
-            <option value="1">Cherry</option>
-            <option value="2">Donut</option>
-            <option value="3">Chocolate</option>
-            <option value="4">Wild</option>
-            <option value="5">Christmas Candy</option>
+            {accessoryData.map((element) => (
+              <>
+                {/*  */}
+                <option key={element.id} value={element.id}>
+                  {element.name}
+                </option>{" "}
+              </>
+            ))}
             {/* Step 4: add an option for each accessory */}
           </select>
         </label>
