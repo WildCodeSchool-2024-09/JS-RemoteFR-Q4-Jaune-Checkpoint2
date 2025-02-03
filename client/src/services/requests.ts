@@ -5,4 +5,4 @@ const getCupcakes = async () => {
   return response.data;
 };
 
-export default getCupcakes;
+export { getCupcakes };

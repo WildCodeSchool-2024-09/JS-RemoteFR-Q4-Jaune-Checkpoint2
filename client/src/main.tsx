@@ -11,7 +11,8 @@ import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 
-import getCupcakes from "./services/requests";
+import CupcakeDetails from "./pages/CupcakeDetails";
+import { getCupcakes } from "./services/requests";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
+        loader: () => getCupcakes(),
+      },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetails />,
         loader: () => getCupcakes(),
       },
     ],
