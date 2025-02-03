@@ -8,10 +8,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
 
 import CupcakeList from "./pages/CupcakeList";
+import CupcakeDetails from "./pages/CupcakeDetails";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 
-import { getCupcakes } from "./services/requests";
+import { getCupcakes, getCupcakeDetails } from "./services/requests";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
         element: <CupcakeList />,
         // Step 1: load data here
         loader: getCupcakes,
+      },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetails />,
+        loader: ({ params }) => getCupcakeDetails(Number(params.id)),
       },
     ],
   },
