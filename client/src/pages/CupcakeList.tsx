@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
+import { Link } from "react-router-dom";
 
 /* ************************************************************************* */
 const sampleCupcakes = [
@@ -101,7 +102,9 @@ function CupcakeList() {
 
         {filteredCupcakes.map((cupcake) => (
           <li key={cupcake.id} className="cupcake-item">
-            <Cupcake data={cupcake} />
+            <Link key={cupcake.id} to={`/cupcakes/${cupcake.id}`}>
+              <Cupcake data={cupcake} />
+            </Link>
           </li>
         ))}
 
