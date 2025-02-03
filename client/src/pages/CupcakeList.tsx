@@ -51,16 +51,20 @@ function CupcakeList() {
   const cupcakes = useLoaderData() as CupcakeArray;
   console.info(cupcakes);
 
+  const [filterAccessory, setFilterAccessory] = useState("");
+
   // Step 3: get all accessories
   const [accessories, setAccessories] = useState([] as AccessoryArray[]);
   useEffect(() => {
     axios.get("http://localhost:3310/api/accessories").then((response) => {
       setAccessories(response.data);
-      console.info(accessories);
     });
-  }, [accessories]);
+  }, []);
 
   // Step 5: create filter state
+  const handleFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterAccessory(event.target.value === "---" ? "" : event.target.value);
+  };
 
   return (
     <>
@@ -69,11 +73,15 @@ function CupcakeList() {
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            onChange={handleFilter}
+            value={filterAccessory}
+          >
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
             {accessories.map((accessory) => (
-              <option key={accessory.id} value={accessory.name}>
+              <option key={accessory.id} value={accessory.slug}>
                 {accessory.name}
               </option>
             ))}
@@ -82,13 +90,17 @@ function CupcakeList() {
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
-        {cupcakes.map((cupcake) => (
-          <Cupcake key={cupcake.id} data={cupcake} />
-        ))}
         {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake data={sampleCupcakes[0]} />
-        </li>
+        {cupcakes
+          .filter(
+            (cupcake) =>
+              filterAccessory === "" || cupcake.accessory === filterAccessory,
+          )
+          .map((cupcake) => (
+            <li className="cupcake-item" key={cupcake.id}>
+              <Cupcake data={cupcake} />
+            </li>
+          ))}
         {/* end of block */}
       </ul>
     </>
