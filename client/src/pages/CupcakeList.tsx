@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
@@ -34,16 +36,30 @@ const sampleCupcakes = [
 
 type CupcakeArray = typeof sampleCupcakes;
 
+type AccessoryArray = { id: number; name: string; slug: string }[];
+
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
 function CupcakeList() {
-  // Step 1: get all cupcakes
   const cupcakes = useLoaderData() as CupcakeArray;
-  console.info(cupcakes);
+  console.info("cupcake with loader", cupcakes);
 
   // Step 3: get all accessories
+
+  const [allAccessories, setAllAccessories] = useState({} as AccessoryArray);
+
+  useEffect(() => {
+    axios
+      .get(" http://localhost:3310/api/accessories ")
+      .then((response) => {
+        setAllAccessories(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  console.info("all accessories : ", allAccessories);
 
   // Step 5: create filter state
 
@@ -61,7 +77,6 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
 
         {cupcakes.map((cupcake) => (
