@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
 
+import CupcakeDetails from "./pages/CupcakeDetails";
 import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
@@ -19,6 +20,12 @@ const getCupcakes = () => {
     .catch((error) => console.error(error));
 };
 
+const getCupcakeById = (id: number) => {
+  return axios
+    .get(`http://localhost:3310/api/cupcakes/${id}`)
+    .then((response) => response.data)
+    .catch((error) => console.error(error));
+};
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +43,11 @@ const router = createBrowserRouter([
         path: "/cupcakes",
         element: <CupcakeList />,
         loader: getCupcakes,
+      },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetails />,
+        loader: ({ params }) => getCupcakeById(Number(params.id)),
       },
     ],
   },
