@@ -10,7 +10,10 @@ Exemples :
 */
 
 function countLetters(givenString: string, letter: string): number {
-  // Your code here !
+  if (givenString.includes(letter)) {
+    return givenString.split(letter).length - 1;
+  }
+
   return 0;
 }
 
