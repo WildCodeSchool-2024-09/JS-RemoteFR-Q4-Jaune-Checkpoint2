@@ -11,6 +11,22 @@ import CupcakeList from "./pages/CupcakeList";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 
+const fetchCupcakes = async () => {
+  const response = await fetch("http://localhost:3310/api/cupcakes");
+  if (!response.ok) {
+    throw new Error("Erreur lors du chargement des cupcakes");
+  }
+  return response.json();
+};
+
+const fetchAccessories = async () => {
+  const response = await fetch("http://localhost:3310/api/accessories");
+  if (!response.ok) {
+    throw new Error("Erreur lors du chargement des accessoires");
+  }
+  return response.json();
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,6 +44,13 @@ const router = createBrowserRouter([
         path: "/cupcakes",
         element: <CupcakeList />,
         // Step 1: load data here
+        loader: async () => {
+          const [cupcakes, accessories] = await Promise.all([
+            fetchCupcakes(),
+            fetchAccessories(),
+          ]);
+          return { cupcakes, accessories };
+        },
       },
     ],
   },
