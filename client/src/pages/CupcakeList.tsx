@@ -32,7 +32,18 @@ const sampleCupcakes = [
   },
 ];
 
-type CupcakeArray = typeof sampleCupcakes;
+type CupcakeArray = CupcakeData[];
+// interface CupcakeArray {[CupcakeData]};
+
+interface CupcakeData {
+  id: number;
+  accessory_id: string;
+  accessory: string;
+  color1: string;
+  color2: string;
+  color3: string;
+  name: string;
+}
 
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
@@ -40,8 +51,8 @@ type CupcakeArray = typeof sampleCupcakes;
 
 function CupcakeList() {
   // Step 1: get all cupcakes
-  const cupcakesData = useLoaderData() as CupcakeArray;
-  console.info(cupcakesData);
+  const data = useLoaderData() as CupcakeArray;
+  console.info(data[0].name);
 
   // Step 3: get all accessories
 
@@ -64,9 +75,10 @@ function CupcakeList() {
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
-          <Cupcake data={sampleCupcakes[0]} />
+          {data.map((cupcake) => (
+            <Cupcake key={cupcake.id} data={cupcake} />
+          ))}
         </li>
-        {/* end of block */}
       </ul>
     </>
   );
