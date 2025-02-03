@@ -47,8 +47,8 @@ interface CupcakeType {
 /* ************************************************************************* */
 
 function CupcakeList() {
-  const cupcake = useLoaderData() as CupcakeType[];
-  console.info(cupcake);
+  const cupcakes = useLoaderData() as CupcakeType[];
+  console.info(cupcakes);
 
   // Step 3: get all accessories
 
@@ -71,7 +71,9 @@ function CupcakeList() {
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
-          <Cupcake data={cupcake[0]} />
+          {cupcakes.map((cupcake) => (
+            <Cupcake key={cupcake.id} data={cupcake} />
+          ))}
         </li>
         {/* end of block */}
       </ul>
